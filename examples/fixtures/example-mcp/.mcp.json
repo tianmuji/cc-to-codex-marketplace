@@ -1,0 +1,8 @@
+{
+  "example": {
+    "command": "node",
+    "args": [
+      "server.js"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "example-mcp",
+  "description": "Original Claude Code MCP plugin.",
+  "version": "1.2.3",
+  "author": {
+    "name": "Example"
+  }
+}

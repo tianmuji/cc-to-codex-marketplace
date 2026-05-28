@@ -1,0 +1,42 @@
+{
+  "name": "cc-to-codex-marketplace",
+  "version": "0.1.0",
+  "description": "Convert Claude Code plugin marketplaces into Codex-compatible plugin marketplaces.",
+  "type": "module",
+  "bin": {
+    "cc-to-codex-marketplace": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "prepare": "npm run build",
+    "test:fixture": "tsx src/cli.ts convert --input examples/claude-marketplace.json --plugins-dir examples/out/codex/plugins --output examples/out/.agents/plugins/marketplace.json --work-dir examples/out/.work && tsx src/cli.ts validate --marketplace examples/out/.agents/plugins/marketplace.json --root ."
+  },
+  "keywords": [
+    "codex",
+    "claude-code",
+    "marketplace",
+    "plugins",
+    "skills",
+    "mcp"
+  ],
+  "author": "tianmuji",
+  "license": "MIT",
+  "dependencies": {
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

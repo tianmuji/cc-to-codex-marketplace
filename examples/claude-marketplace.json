@@ -1,0 +1,26 @@
+{
+  "name": "example-marketplace",
+  "interface": {
+    "displayName": "Example Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "example-skill",
+      "description": "Example pure skill plugin converted from a Claude Code plugin.",
+      "source": {
+        "source": "local",
+        "path": "examples/fixtures/example-skill"
+      },
+      "category": "development"
+    },
+    {
+      "name": "example-mcp",
+      "description": "Example MCP plus skill plugin converted from a Claude Code plugin.",
+      "source": {
+        "source": "local",
+        "path": "examples/fixtures/example-mcp"
+      },
+      "category": "development"
+    }
+  ]
+}

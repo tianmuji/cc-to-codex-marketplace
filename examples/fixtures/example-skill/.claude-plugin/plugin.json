@@ -1,0 +1,8 @@
+{
+  "name": "old-example-skill-name",
+  "description": "Original Claude Code skill plugin name can differ from marketplace entry.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Example"
+  }
+}
