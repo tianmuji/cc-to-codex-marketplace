@@ -36,24 +36,20 @@ This tool bridges those formats while preserving MCP servers and pure skill plug
 
 ## Install
 
-Use directly from GitHub:
+Install from GitHub as a dev dependency:
 
 ```bash
-npx github:tianmuji/cc-to-codex-marketplace convert
+npm install -D github:tianmuji/cc-to-codex-marketplace#v0.1.0
 ```
 
-Or install from GitHub as a dev dependency:
-
-```bash
-npm install -D github:tianmuji/cc-to-codex-marketplace
-```
+Use `#main` instead of a version tag if you want to track the latest commit.
 
 ## Convert
 
 Run from the marketplace repo root:
 
 ```bash
-npx github:tianmuji/cc-to-codex-marketplace convert \
+npx cc-to-codex-marketplace convert \
   --input .claude-plugin/marketplace.json \
   --output .agents/plugins/marketplace.json \
   --plugins-dir codex/plugins
@@ -71,7 +67,7 @@ codex/plugins/<plugin>/skills/<skill>/SKILL.md
 ## Validate
 
 ```bash
-npx github:tianmuji/cc-to-codex-marketplace validate \
+npx cc-to-codex-marketplace validate \
   --marketplace .agents/plugins/marketplace.json \
   --root .
 ```
@@ -81,7 +77,7 @@ npx github:tianmuji/cc-to-codex-marketplace validate \
 `check` regenerates Codex artifacts, validates them, and fails if generated files differ from the committed files.
 
 ```bash
-npx github:tianmuji/cc-to-codex-marketplace check
+npx cc-to-codex-marketplace check
 ```
 
 GitLab CI example:
@@ -91,7 +87,8 @@ validate-codex-marketplace:
   image: node:20
   script:
     - npm ci
-    - npx github:tianmuji/cc-to-codex-marketplace check
+    - npm install --no-save github:tianmuji/cc-to-codex-marketplace#v0.1.0
+    - npx cc-to-codex-marketplace check
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
@@ -105,7 +102,7 @@ validate-codex-marketplace:
 For GitLab sources:
 
 ```bash
-GITLAB_TOKEN=... npx github:tianmuji/cc-to-codex-marketplace convert
+GITLAB_TOKEN=... npx cc-to-codex-marketplace convert
 ```
 
 In GitLab CI, `CI_JOB_TOKEN` is also supported.
@@ -113,7 +110,7 @@ In GitLab CI, `CI_JOB_TOKEN` is also supported.
 For GitHub sources:
 
 ```bash
-GITHUB_TOKEN=... npx github:tianmuji/cc-to-codex-marketplace convert
+GITHUB_TOKEN=... npx cc-to-codex-marketplace convert
 ```
 
 ## User Install Flow

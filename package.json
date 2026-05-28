@@ -15,7 +15,7 @@
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts",
     "check": "tsc -p tsconfig.json --noEmit",
-    "prepare": "npm run build",
+    "prepack": "npm run build",
     "test:fixture": "tsx src/cli.ts convert --input examples/claude-marketplace.json --plugins-dir examples/out/codex/plugins --output examples/out/.agents/plugins/marketplace.json --work-dir examples/out/.work && tsx src/cli.ts validate --marketplace examples/out/.agents/plugins/marketplace.json --root ."
   },
   "keywords": [
