@@ -7,10 +7,11 @@ validate-codex-marketplace:
   before_script:
     - npm ci
   script:
-    - npx cc-to-codex-marketplace check
+    - npx cc-to-codex-marketplace check --overrides codex-overrides.yaml --env test
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
         - .claude-plugin/marketplace.json
+        - codex-overrides.yaml
         - .agents/**/*
         - codex/**/*

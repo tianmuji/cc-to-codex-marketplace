@@ -1,0 +1,8 @@
+{
+  "name": "example-oauth-mcp",
+  "description": "Original Claude Code OAuth MCP plugin.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Example"
+  }
+}

@@ -21,6 +21,15 @@
         "path": "examples/fixtures/example-mcp"
       },
       "category": "development"
+    },
+    {
+      "name": "example-oauth-mcp",
+      "description": "Example MCP plugin converted to streamable HTTP with OAuth metadata.",
+      "source": {
+        "source": "local",
+        "path": "examples/fixtures/example-oauth-mcp"
+      },
+      "category": "development"
     }
   ]
 }

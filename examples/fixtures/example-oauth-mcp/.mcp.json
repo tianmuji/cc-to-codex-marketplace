@@ -1,0 +1,8 @@
+{
+  "oauth-example": {
+    "command": "node",
+    "args": [
+      "oauth-server.js"
+    ]
+  }
+}

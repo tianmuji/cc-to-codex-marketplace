@@ -52,6 +52,8 @@ Options:
   --output <path>         Codex marketplace file (default: .agents/plugins/marketplace.json)
   --plugins-dir <path>    Generated Codex plugin directory (default: codex/plugins)
   --work-dir <path>       Temporary fetch directory (default: .cc-to-codex-work)
+  --overrides <path>      Codex override file (default: codex-overrides.yaml, ignored if missing)
+  --env <name>            Environment for override URL selection (default: default)
   --marketplace-name <n>  Override generated marketplace name
   --display-name <n>      Override generated marketplace display name
   --root <path>           Validation root (default: .)
@@ -68,6 +70,8 @@ function convertOptions(args: Args) {
     output: stringArg(args, 'output', '.agents/plugins/marketplace.json'),
     pluginsDir: stringArg(args, 'plugins-dir', 'codex/plugins'),
     workDir: stringArg(args, 'work-dir', '.cc-to-codex-work'),
+    overrides: stringArg(args, 'overrides', 'codex-overrides.yaml'),
+    env: stringArg(args, 'env', 'default'),
     marketplaceName: optionalStringArg(args, 'marketplace-name'),
     displayName: optionalStringArg(args, 'display-name'),
   }

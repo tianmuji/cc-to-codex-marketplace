@@ -29,6 +29,8 @@ This tool bridges those formats while preserving MCP servers and pure skill plug
 - Supports local sources for tests and monorepos.
 - Supports pure skill plugins with no MCP server.
 - Wraps Claude-style flat `.mcp.json` into Codex `{ "mcpServers": ... }`.
+- Can override MCP servers from `stdio` to streamable HTTP for Codex.
+- Supports bearer-token env var and OAuth login metadata for HTTP MCP servers.
 - Overrides plugin manifest `name` to match the marketplace entry, fixing common name mismatches.
 - Normalizes skill frontmatter to Codex-friendly `name` and `description`.
 - Removes Claude/OpenAI agent metadata such as `skills/*/agents/openai.yaml`.
@@ -39,7 +41,7 @@ This tool bridges those formats while preserving MCP servers and pure skill plug
 Install from GitHub as a dev dependency:
 
 ```bash
-npm install -D github:tianmuji/cc-to-codex-marketplace#v0.1.0
+npm install -D github:tianmuji/cc-to-codex-marketplace#v0.2.0
 ```
 
 Use `#main` instead of a version tag if you want to track the latest commit.
@@ -52,7 +54,9 @@ Run from the marketplace repo root:
 npx cc-to-codex-marketplace convert \
   --input .claude-plugin/marketplace.json \
   --output .agents/plugins/marketplace.json \
-  --plugins-dir codex/plugins
+  --plugins-dir codex/plugins \
+  --overrides codex-overrides.yaml \
+  --env test
 ```
 
 Generated layout:
@@ -60,9 +64,55 @@ Generated layout:
 ```text
 .agents/plugins/marketplace.json
 codex/plugins/<plugin>/.codex-plugin/plugin.json
+codex/plugins/<plugin>/.codex-plugin/mcp-auth.json
 codex/plugins/<plugin>/.mcp.json
 codex/plugins/<plugin>/skills/<skill>/SKILL.md
 ```
+
+`--overrides` defaults to `codex-overrides.yaml` and is ignored if the file does not exist.
+`--env` selects an environment-specific URL from the override file.
+
+## MCP Overrides
+
+Use `codex-overrides.yaml` when the Codex plugin should use different MCP transport or auth than the Claude Code plugin:
+
+```yaml
+plugins:
+  my-plugin:
+    mcpServers:
+      my-server:
+        transport: streamable_http
+        url:
+          test: https://mcp-test.example.com/mcp
+          prod: https://mcp.example.com/mcp
+        auth:
+          type: oauth
+          scopes:
+            - my:read
+            - my:write
+```
+
+Bearer-token HTTP MCP servers use an environment variable name, not a committed token:
+
+```yaml
+plugins:
+  my-plugin:
+    mcpServers:
+      my-server:
+        transport: streamable_http
+        url: https://mcp.example.com/mcp
+        auth:
+          type: bearer
+          bearerTokenEnvVar: MY_MCP_TOKEN
+```
+
+Generated OAuth metadata is written to `.codex-plugin/mcp-auth.json`. Users authenticate with Codex after installation:
+
+```bash
+codex mcp login my-server --scopes my:read,my:write
+```
+
+The OAuth metadata is intentionally separate from `.mcp.json`: Codex discovers OAuth from the remote MCP server during `codex mcp login`, while the generated metadata gives users and CI a stable place to find the expected scopes.
 
 ## Validate
 
@@ -87,8 +137,8 @@ validate-codex-marketplace:
   image: node:20
   script:
     - npm ci
-    - npm install --no-save github:tianmuji/cc-to-codex-marketplace#v0.1.0
-    - npx cc-to-codex-marketplace check
+    - npm install --no-save github:tianmuji/cc-to-codex-marketplace#v0.2.0
+    - npx cc-to-codex-marketplace check --overrides codex-overrides.yaml --env test
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
@@ -148,7 +198,8 @@ npm run test:fixture
 It demonstrates both:
 
 - a pure skill plugin
-- an MCP-backed plugin
+- an MCP-backed plugin converted to streamable HTTP with bearer auth
+- an MCP-backed plugin converted to streamable HTTP with OAuth metadata
 
 ## License
 

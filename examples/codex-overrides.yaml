@@ -1,0 +1,23 @@
+plugins:
+  example-mcp:
+    mcpServers:
+      example:
+        transport: streamable_http
+        url:
+          test: https://mcp-test.example.com/example
+          prod: https://mcp.example.com/example
+        auth:
+          type: bearer
+          bearerTokenEnvVar: EXAMPLE_MCP_TOKEN
+  example-oauth-mcp:
+    mcpServers:
+      oauth-example:
+        transport: streamable_http
+        url:
+          test: https://mcp-test.example.com/oauth
+          prod: https://mcp.example.com/oauth
+        auth:
+          type: oauth
+          scopes:
+            - example:read
+            - example:write
